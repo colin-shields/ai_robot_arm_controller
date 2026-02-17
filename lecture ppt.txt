@@ -1,0 +1,753 @@
+Introduction to
+Industrial Robots (robot arms)
+& Dobot Robot Arm (using Python)
+Robert Avanzato
+Fall 2025
+EDSGN 410 Robotics
+© 2023-2025 Avanzato
+What is an Industrial Robot?
+• Industrial robot is a robot used primarily in manufacturing
+• Industrial robots are commonly known as robot arms (but some differences)
+• Applications include welding, painting, material handling, pick and place,
+packaging, product inspection, etc.
+• Defined by degrees of freedom (DOF) = number of axes
+• Characteristics: Payload, Speed, Acceleration, Accuracy, Repeatability
+• Programming Issues
+• Advantages: Speed, Safety, Reliability, Operate in hazardous conditions
+• Collaborative Robotics – growing trend (example: Baxter robot)
+• What industries use industrial robots? Automotive, general manufacturing.
+food industry, pharmaceutical, biomedical, etc.
+Types of Industrial Robots
+• Articulated
+• Cartesian
+• SCARA
+• Selective Compliance Assembly
+Robot Arm
+• Spherical (Polar)
+• Cylindrical
+• Delta (spider-like)
+Types of Joints
+1) Revolute (rotary)
+2) Prismatic (linear)
+Degrees of Freedom
+• number of joints (axes)
+• each joint can be rotary or prismatic (linear)
+• Most industrial robot between 4 and 6 degrees of freedom
+SCARA
+Delta
+Articulated
+Palletizing Robot
+ABB Scara Robot Example
+Application: Food Industry
+Dobot CR3 robot arm (we have one CR3 at Abington)
+Screw driving (Dobot CR5)
+Key Concepts with Robotics Arms (Manipulators)
+1. Forward Kinematics ➔ Given the angles for each joint find the X, Y, Z position of the end effector.
+2. Inverse Kinematics ➔ Given the desired X, Y, Z position of the final position of the end-effector, what
+are the angles to the joints? (much harder problem than forward kinematics)
+3. Region of Application (Workspace) (map all of the possible positions of the end-effector)
+1. Each joints has limits (min/max angle & extension limits))
+4. Two types of joints
+1. Revolute (rotation)
+2. Prismatic (translation)
+Note: we will be dealing primarily with revolute joints
+Ref: Jonathan Hoy, Autonomous Robot Arm using MATLAB (Youtube)
+Forward Kinematics
+Given the angles for each joint, find the X, Y position of the end-effector.
+X,Y
+Ref: Jonathan Hoy, Autonomous Robot Arm using MATLAB
+Above example in 2D; be able to extend to 3D
+- Given Θ1, Θ2, Θ3, find X,Y,Z of end-effector
+- Extended to 3D
+Ref: Milfordrobotics , Forward and Inverse Kinematics Part 1
+Find
+X,Y,Z
+Inverse Kinematics (difficult problem)
+Ref: Milfordrobotics , Forward and Inverse Kinematics Part 1
+- Setting up coordinate systems
+- Transformation Matrix
+- Denavit-Hartenberg (DH) Convention
+- Later in course
+Given
+X,Y,Z
+Given X,Y,Z of end-effector, find Θ1, Θ2, Θ3
+Inverse Kinematics (difficult problem)
+ref: Mathworks
+How would your move in oval path or draw a straight line?
+(example: draw or cut, etc.)
+Must consider constraints on joints
+HW: Discussion Forum (video summary)
+2 assignments….
+1) Summarize (10 to 15 sentences) a video of an articulated robot arm (commercial
+or research) in any application (manufacturing, medical, quality control, etc.)
+Include degrees of freedom and manufacturer if available.
+Post summary with link to video and also post one reply to another student’s post
+2) Summarize (10 to 15 sentences) video of a non-articulated robot arm (either
+Cartesian, SCARA, Spherical (Polar), Cylindrical, or Delta (spider-like) (commercial or
+research) in any application (manufacturing, medical, quality control, etc.) Include
+degrees of freedom (DOF) and type of robot.
+Post summary with link to video and also post one reply to another student’s post
+Summary of Industrial Robots
+• Industrial Robots are commonly used in industry and are applied to a wide range of applications. Application areas include automotive,
+manufacturing, food, pharmaceuticals, medical , defense industries and more.
+• Industrial robots (robot arms) are often characterized by the number of degrees of freedom (axes)
+• Industrial robots can save money, increase efficiency, and reduce injuries especially with repetitive tasks.
+• Many companies manufacture and supply industrial robots worldwide such as ABB, Fanuc, Yaskawa, Kuka, Kawasaki, and many others.
+• Costs for an individual industrial robot range (approx.) from $50K to $500K and much higher.
+• Industrial robots can be programmed manually with a training system, or they can be controlled via a computer programmed in a high
+level language such as C++ or Python. Industrial controllers are also controlled by PLCs (programmable logic controllers).
+• Industrial robots are often (not always) supplemented with cameras and computer vision algorithms.
+• Large commercial industrial robots are generally dangerous to other human workers and the robot are secured and access is limited
+while robots are in operation due to safety concerns.
+• A new field of industrial robotics, called collaborative robotics, facilitates robots working side by side with humans in a safe way.
+Collaborative robots, such as the Baxter, are typically slower and less powerful, but are easily retrained and are useful in medium and
+small manufacturing facilities.
+• Robot arms use PID control to move efficiently and precisely.
+• Forward kinematics and inverse kinematics are techniques used to mathematically analyze the positioning of industrial robot arms.
+Joints can be categorized as revolute (rotational) or prismatic (translational).
+• Industrial robots can be simulated using special software to analyze the operation and advantages of the robot before installation.
+Part 2: Dobot Robot Arm with Python
+Dobot Magician Robot Arm + Conveyor Belt + Sensors
+Robot Arm → 4 DOF → 0.2mm repeatability
+Suction cup
+Pneumatic gripper
+3D printer mechanism
+pen and pen holder
+13 I/O ports
+Base dimensions: 158mm (6.2 in.) by 158mm (6.2 in)
+Conveyor Belt
+ Color Sensor
+ IR Sensor
+Supports MATLAB, ROS, Python, C++, C#, Java,
+ and others
+Logitech C920 webcam and stand (optional)
+Pneumatic Gripper Orientation with Pencil
+video
+Python vs MATLAB vs C++
+# Python
+# indentation is important
+# notice : to start block
+if x > 10 :
+ print("hello")
+ print ("x > 10")
+else:
+ print ("x <= 10")
+% MATLAB
+if x > 10
+ display("hello")
+ display ("x > 10")
+else
+ display (" x <=10 ")
+end
+// C++
+if (x > 10 ) {
+ cout << "hello";
+ cout << "x > 10";
+}
+else
+ cout << "x <= 10";
+# Python loop
+for k in range(5):
+ print("hello")
+# displays "hello" 5 times
+% MATLAB loop
+for k = 1:5
+ print("hello")
+end
+% displays "hello" 5 times
+// C++ loop
+for (int k = 0; k<5; k++)
+ { cout << "hello"; }
+
+// displays "hello" 5 times
+Python vs MATLAB vs C++
+# Python list (array)
+x = [ 10, 20, 30, 40, 50 ]
+x[0] → 10 # first element is index 0
+len(x) → 5
+min(x) → 10
+avg = sum(x) / len(x) → 30
+% MATLAB array
+x = [ 10, 20, 30, 40, 50 ]
+x(0) → error % first element is index 1
+x(1) → 10
+len(x) → 5
+min(x) → 10
+mean(x) → 30
+// C++ array
+int x = {10, 20, 30, 40, 50};
+x[0] → 10 // first element is index 0
+size(x) → 5
+min = x[0];
+for (int i=0; i < 5; i++)
+ { if (x[i] < min)
+ min = x[i];
+ }
+sum = 0;
+for (int i=0; i < 5; i++)
+ { sum = sum + x[ I ]; }
+avg = sum / 5;
+Dobot Magician Axes of Rotation and joint labels (J1, J2, J3, J4)
+20
+Dobot Magician Cartesian Coordinate System (X, Y, Z, R)
+21
+X
+Y
+Z
+Dobot Robot Arm Workspace (looking down)
+Ranges are limited:
+Keep end-effector within
+area defined by arcs as
+shown.
+`
+When y = 0,
+200 < x < 315mm
+When x = 0
+-315 < y < -200
+Or
+200 < y < 315
+Height z
+-60 < z <180
+Note: z = 0 at top of base
+Note: 100mm ~= 4 in
+Question: How do you draw a
+straight line?
+x
+Y
+315 mm
+200 mm
+(7.8 in.)
+315 mm 200 mm -200 mm -315 mm
+45 deg -45 deg
+90 deg -90 deg
+valid
+region
+valid
+region
+Number of Axis: 4
+Payload: 500g (1.1 lb)
+Max. Reach: 320mm.
+Position Repeatability: 0.2 mm
+Connectivity: USB / WIFI / Bluetooth.
+Power Supply: 100 V – 240 V , 50/60 HZ.
+Power In: 12 V / 7A DC.
+Consumption: 60W Max.
+22
+Robot
+Arm
+(12.4 in.)
+JOG versus PTP
+1. Jog (Joint Operation Group) Motion: In Jog motion, the robot moves its joints one
+by one, independently of each other. Each joint moves at a constant speed, and
+the motion of the robot is determined by the individual joint angles. Jog motion is
+useful when you want to control specific joints of the robot arm and make precise
+adjustments to the robot's position. It is commonly used for manual control,
+calibration, or during the initial setup of the robot.
+2.PTP (Point-to-Point) Motion: In PTP motion, the robot moves from one point to
+another in the Cartesian coordinate system. The motion planner calculates the
+path and the required joint angles for the robot to move from the start position to
+the target position. In PTP motion, the robot moves all joints simultaneously, and
+the focus is on reaching the target position accurately, rather than controlling the
+motion of individual joints. PTP motion is useful for tasks like pick-and-place,
+where the robot needs to move from one point to another as quickly and
+efficiently as possible.
+23
+We will use PTP primarily
+Reference: GPT4
+2 approaches to programming the Dobot
+robot arm in Python
+1. Download the DobotLab (free browser app or download) script tool
+and use the built-in Python editor
+2. Download the Dobot API DLL file and import into a Python program
+(using editor such as Idle or Pycharm). DLL file is available from
+Dobot website. See Canvas files.
+import DobotDllType as dType
+from DobotFunctions import *
+24
+We will use the DLL
+files in this course!
+Good for testing
+ChatGPT knows how to program the Dobot
+25
+There may be
+errors in
+chatGPT
+code.
+Be careful.
+May provide
+"code
+snippets" -
+not complete
+programs
+NOTE: Use chatGPT
+with caution.
+Do not trust chatGPT
+until we verify – use
+sample code in PPT
+instead.
+Hint: mention
+DobotDLL in ChatGPT
+prompt
+Connecting Vacuum Pump to Dobot Robot Arm
+26
+Dobot Robot Arm Labs (individual or teams of 2)
+• Dobot Lab #0 (individual): Write your initials using the pen and drawing feature in the Dobot Studio (no programming required). Use
+DobotStudio software for this lab. No Python programming is required. Attach pen tool to robot arm. Submit image of initials drawn on
+paper (take photo with phone and submit jpg). No lab report required.
+• Dobot Lab #1 (individual): Write your initials using the pen attachment under Python software control. Do not use the DobotStudio
+software for this lab. Python programming is required. Attach pen tool to robot arm. Include image of initials drawn on paper (take photo
+with phone). Lab report includes header, objective, materials, pseudocode, image of initials drawn by robot, conclusion, complete Python
+code. No videos required. Printed letters should be 2 to 3 inches in height.
+• Dobot Lab #2 (individual or team of 2): Stack 3 blocks that are spaced 3 inch apart in a new location using only the hardcoded position of the
+first block. Use the vacuum actuator to pick up the blocks. Use Python code.
+Lab report: Header, objective, pseudocode, image of setup, video, complete Python code) See details in subsequent PPT slides. Lab report:
+Header, objective, system block diagram, pseudocode, image of setup, video, conclusion, complete Python code
+• Dobot Lab #3 (individual or team of 2): Remove blocks (positioned along center line of conveyor belt) and place blocks in a box or specified
+area. Use the vacuum actuator to pick up the blocks. Use photocell to detect presence of the blocks on the conveyor belt. Demonstrate with
+at least 10 blocks with various spacing on conveyor belt. Use Python code
+Lab report: Header, objective, system block diagram, pseudocode, image of setup, video, conclusion, complete Python code
+• Dobot Lab #4 (individual or team of 2): Same as lab #2 above but use color detector (included in conveyor belt kit) to determine the color
+(red or blue) of the blocks and separate blocks from conveyor belt to a box containing only red objects and a box containing only blue
+objects. Demonstrate with at least 10 randomly sequenced red and blue blocks. Blocks are placed on center line of conveyor belt. Use
+photocell, conveyor belt, color sensor. Use Python code
+Lab report: Header, objective, system block diagra, pseudocode, image of setup, video, conclusion, complete Python code)
+• Grade will be based on technical merit; code organization and clarity; testing quality
+27
+28
+DobotLab simulator with Python Lab. NOTE: use DobotLab and DobotLink for
+testing robot only. Use .DLL files and Python editor for programming robot.
+29
+DobotLab software
+(for testing only
+)
+What to do next?
+• Open file folder from Canvas and run the sample demo Python program
+(DobotControl.py) to control the Dobot arm with Pycharm and the DLL file.
+• NOTE: this step does not use Dobot Studio in any way.
+• Unzip the compressed folder before using.
+• Open and run DobotControl program with IDLE or Pycharm IDE
+• Test the DobotControl program – if it doesn’t move robot arm then contact instructor
+• All of your future programs need to be located in this folder with the DLL files
+• Open IDLE (Python IDE) and select “New File” and copy sample Python programs from lecture
+notes. Save all programs in same folder (directory) as DobotControl program.
+• There labs are directed but still open-ended projects which will require input
+from the instructor at various points.
+30
+Lab #1 Drawing Initials (Workflow and Hints)
+x
+Y
+315 mm
+200 mm (8 in.)
+315 mm 200 -200 -315 mm
+45 deg -45 deg
+90 deg -90 deg
+31
+Robot
+Arm
+(12.4 in.)
+1. Install pen onto robot arm
+2. Tape white paper (preferably 2 sheets thick) to table in robot working space
+3. Run GetPose script (see appendix) to find z (height) and starting x and y position
+4. Do not damage pen tip (replace cap on pen when done lab)
+5. Create, run and test Python script to draw initials (use linear mode, not jump mode)
+valid
+region
+valid
+region
+Note: Run setHome
+function to calibrate
+robot before starting
+(optional)
+valid
+region
+valid
+region
+Jump Mode versus Linear Mode (with SetPTPCmd)
+32
+x1, y1, z1 x2, y2, z2
+x1, y1, z1 x2, y2, z2
+Jump Mode (PtpMode = 0)
+(Note: jump height can be adjusted;
+Default = 20 mm; we can increase it later)
+Linear Mode (PtpMode = 2)
+20 mm
+current
+position
+target
+position
+Jump Mode automatically raises the arm then moves
+to the target location and automatically lowers arm
+(this is to avoid collisions as robot arm is moving to
+target position.)
+current
+position
+target
+position
+Linear Mode automatically moves directly (in a
+straight line) from current position to target position.
+Example Pseudocode: Draw a square
+• Load DLL files
+• Connect Dobot robot arm to computer
+• Manually move pen to selected area on paper
+• Run Getpose() to get current x, y, z, rot of pen
+• Set ptpMode to Linear (set to 2)
+• Move pen 50 mm (2 inches) in +x direction
+• SetPTPCmd(api, ptpMode, x + 50, y, z, rot, 0)
+• Move pen 50 mm (2 inches) in –y direction
+• Move pen 50 mm (2 inches) in –x direction
+• Move pen 50 mm (2 inches) in +y direction
+• Move pen 25 mm (1 inch) in +z direction (lift pen from paper)
+33
+x
+Y
+34
+Lab #2: Move and Stack 3 blocks (see example video)
+video
+Lab #2: Move and Stack 3 blocks (see example video)
+• Objective: Write and test a Python script to control the Dobot robot arm to pick up 3 blocks and stack the blocks on
+top of each other. The 3 blocks should be positioned in a line with a 1-inch separation between the blocks. The
+stack should be positioned 2 inches away from the line of blocks. Use the vacuum gripper to move the blocks. The 3
+blocks can be picked up in any order. Position black #1 at y = 0 and x = 250. All other block locations should be
+determined by offsets.
+• Do not use conveyor belt for this lab.
+• Extra Credit (optional): Continuously stack. unstack and restack blocks (this is a good test for robot accuracy and
+precision). Robot arm end-effector must move away from last object positioned before repeating. Record all results
+in video.
+• Deliverables: Lab report with header, objective, materials, pseudocode, code (commented and well-organized),
+pictures of setup, results (were test cases successful?), short video, conclusion. Each student should submit lab
+report.
+• Do in teams of 2 (or individually); use external monitor to share screen
+• Take notes during lab
+Final position (side view) Initial position (top view)
+x
+Y
+Z
+35
+Note: Run setHome
+function to calibrate
+robot before starting
+System Block Diagram for Lab #2
+36
+Dobot Robot Arm Vacuum pump PC
+(Python software)
+Lab #2: Workflow for Move and Stack 3 blocks
+• Set up 3 blocks (any color) on paper (secured). Use paper and mark positions of blocks with a pen. Blocks should
+be 1 inch apart (use ruler); stack block position should be 2 inches from other blocks.
+• Place Block #1 at approx. y1=100, x1=250; call GetPose and record x1, y1, z1 values (these values are in mm)
+• Note: blocks are 1 inch on a side; 1 inch = 25.4 mm; centers of blocks are 2 inches apart (50.8 mm)
+• Note: stack position center is 3 inches (76.2 mm) from center of block #3 (or 7 inches from center of block #1)
+• Position of block #2 is x1, y1 + 50.8, z1 etc. (Note: use offsets to get new positions)
+• Use offsets from position #1 to get positions #2 and #3 and stack position
+• First step: Write Python code to move block from position #1 to the stack position and test. Show instructor.
+• Copy and paste code to move block #2 to stack
+• Add 2 inches (25.4 mm * 2) to y1 position to get block #2 y position ( x and z are same as x1 and z1)
+• Stack y position = y1 - 7 * 25.4 (7 in) and add 1 inch (25.4mm) to z1 position
+• Copy and paste code to move block #3 to stack
+• Add 4 inches (25.4 mm * 4) to y1 position to get block #3 y position (x and z are same as x1 and z1)
+• Stack y position = y1 - 7 * 25.4 (7 in) and add 2 inch (2 * 25.4mm) to z1 position
+stack position (top view) Initial position (top view)
+x Block #1 Block #2 Block #3 stack
+Y
+2 inches 1 in 1 in 1 in
+37
+38
+Lab #3: Move Blocks from Conveyor Belt
+video
+Notes:
+1) Blocks should be
+centered on
+conveyor belt.
+Why?
+2) Sequence operation
+of vacuum pump
+and conveyor belt.
+3) Blocks do not need
+to be evenly spaced
+on conveyor belt.
+Why?
+Conveyor Belt, light sensor, color sensor
+39
+Sample Dobot Scripts
+(using DobotDLL and Python and Pycharm)
+40
+1. Move arm to specified x, y, z, rotation
+2. GetPosition – get x, y, z, rotation values
+3. Vacuum pump(turn on/off)
+4. Photocell (object detector; check status)
+5. Conveyor belt (turn on/off, adjust speed)
+6. Color sensor (RGB)
+7. GoHome function (calibrate robot)
+Example: Move arm to any position (x, y, z, rot)
+import DobotDllType as dType
+#Load Dll
+api = dType.load()
+#Connect Dobot
+state = dType.ConnectDobot(api, "", 115200)[0] # connect only one time in your program
+print("Dobot Connected...")
+# set parameter (velocities, accelerations, etc.) Do once in your program. NOTE: do not modify these values
+dType.SetHOMEParams(api, 200, 0, 200, 200)
+dType.SetPTPJointParams(api, 200, 200, 200, 200, 200, 200, 200, 200)
+dType.SetPTPCommonParams(api, 100, 100)
+# ---------------------------------------------------------- include above code one time only in program ---------------------------------------
+x = 200; y = 0; z = 50; rHead = 0 # set an arbitrary position of robot arm effector (pen, suction cup, gripper, etc.)
+ptpMode = 2 # use 2 for linear mode (for jump mode, set to 0; use SetPTPJumpParams(api, jumpHeight, zLimit, 0) to set jump(mm)
+# PTP Motion commands (all units in mm)
+dType.SetPTPCmd(api, ptpMode, x, y, z, rHead, 0) # move robot to x, y, z, rot to a position
+dType.dSleep(2000) # delay 2 seconds
+dType.SetPTPCmd(api, ptpMode, x + 50, y, z, rHead, 0) # extend arm in x direction (forward) by 50 mm
+41
+(optional) Replace
+with “COM3” or
+other port #
+Example: Get Position (x, y, z, rot) of end-effector
+import DobotDllType as dType
+api = dType.load()
+#Connect Dobot
+state = dType.ConnectDobot(api, "", 115200)[0]
+print("Dobot Connected...")
+pos = dType.GetPose(api)
+x = pos[0]
+y = pos[1]
+z = pos[2]
+rHead = pos[3]
+print(x,y,z, rHead)
+42
+This program
+displays the x, y, z,
+rotation position of
+the current robot
+arm end-effector
+position.
+Example: Turning on/off the Vacuum Pump
+# Turn on vacuum pump
+suction_cup = 1
+ctrl_mode = 1
+enable_pump = 1 # set variable to 1 to turn on
+dType.SetEndEffectorSuctionCup(api, suction_cup, enable pump, ctrl_mode)
+dType.dSleep(4000) # leave vacuum pump on for 4 seconds (adjust as needed)
+# Turn off the vacuum pump
+enable_pump = 0 # set variable to 0 to turn off
+dType.SetEndEffectorSuctionCup(api, suction_cup, enable_pump, ctrl_mode)
+43
+This demo program
+turns on the
+vacuum pump for 4
+seconds, then turns
+off the vacuum
+pump.
+(Modify as needed)
+Example: Checking Status of Photocell Sensor
+import DobotDllType as dType
+api = dType.load()
+#Connect Dobot
+state = dType.ConnectDobot(api, "", 115200)[0]
+isEnable = 1
+infraredPort = 2 # plug IR sensor into GP4 (port 2)
+dType.SetInfraredSensor(api, isEnable, infraredPort, version = 0)
+while True:
+ # Get the current status of the photocell sensor
+ IRSensor = dType.GetInfraredSensor(api,infraredPort)
+
+ # Print the current status of the IR sensor
+ if IRSensor[0] == 0:
+ print("The IR sensor is OFF") # detects no object
+ else:
+ print("The IR sensor is ON") # detects an object
+44
+This program repeatedly
+displays the status of the IR
+sensor. The IR sensor is used
+to detect objects on the
+conveyor belt. It has a short
+range < 10 inches
+Example: Turning on the Conveyor Belt
+# Turn on the conveyor belt for a fixed time duration
+import DobotDllType as dType
+api = dType.load()
+#Connect Dobot
+state = dType.ConnectDobot(api, "", 115200)[0]
+print("Dobot Connected...")
+# setEMotor(api, index, isEnabled, speed) NOTE: set index = 0 for top motor port on Dobot
+dType.SetEMotor(api, 0, 1, 4000) # set E motor (speed range 4000 to 6000)
+dType.dSleep(5000) # keep conveyor belt on for 5 seconds (adjust as needed)
+# Turn off the conveyor belt
+dType.SetEMotor(api, 0, 0, 0) # set E motor speed to 0 (stop)
+45
+tested
+Example: Reading Output of Color Sensor
+import DobotDllType as dType
+api = dType.load()
+#Connect Dobot
+state = dType.ConnectDobot(api, "", 115200)[0]
+print("Dobot Connected...")
+# Initialize the color sensor (do one time)
+isEnable = 1
+colorPort = 3 # connect to port 3 on top of robot arm (not GP2)
+dType.SetColorSensor(api, isEnable, colorPort, 1)
+# Read the color sensor data
+sensorData = dType.GetColorSensor(api)
+# Print the color sensor data (returns 1 or 0)
+print("Red: ", sensorData[0])
+print("Green: ", sensorData[1])
+print("Blue: ", sensorData[2])
+46
+Color sensor returns a binary
+value (0 or 1) for each color
+(RGB).
+Do research to see if we can get
+analog values (0 to 255).
+Example: Go Home Function
+NOTE: this should recalibrate robot coordinate system
+import DobotDllType as dType
+api = dType.load()
+#Connect Dobot
+state = dType.ConnectDobot(api, "", 115200)[0]
+print("Dobot Connected...")
+dType.SetHOMECmd(api, 0, 1)[0]
+dType.dSleep(5000)
+dType.DisconnectDobot(api)
+print("Dobot Disconnected...")
+// NOTE: use command below(optional) to redefine the location of
+// the home position
+// dType.SetHOMEParams(api, x, y, z, rHead, isQueued=1)[0]
+47
+NOTE:Run this calibration
+code at least once before
+starting the labs. You may
+need to calibrate again as
+needed.
+Interfacing sensors and external electronics to
+the Dobot robot arm
+48
+Dobot Magician Interface - base
+49
+Dobot Magician Interface – arm
+50
+use EI05 for
+external
+input from
+Arduino or
+switch
+Ref: Dobot Magician V2 User Guide
+(2020)
+51
+Dobot Magician Interface – Digital Inputs
+NOTE: If port 5 is configured as input with pull-up resistor
+then connect port 5 to ground for input = 0; leave
+unconnected for input = 1 (use opto-isolator or relay)
+Ref: http://chrisandjimcim.com/wpcontent/uploads/2019/10/Dobot-Blockly-Workbook.pdf
+Port 7 can also be
+used as a digital
+input
+5v 5v
+5v 5v
+52
+Dobot Magician Interface – Digital Inputs with Opto-isolator
+Ref: http://chrisandjimcim.com/wp-content/uploads/2019/10/Dobot-Blockly-Workbook.
+modified by RLA
+Opto-isolator IC (standard)
+Notes:
+1) Always check the spec sheets of the opto-isolator IC model you are using
+2) Use of opto-isolator is not needed if Dobot input accepts 5v (check with instructor)
+1) use opto-isolator if Dobot cannot accept 5v inputs (check specs)
+3) Be careful with 2 LEDs in series (check forward diode voltages)
+port 5 (configured with pull-up)
+ground
+3.3 volts
+pull-up resistor
+Arduino
+Gnd
+Output pin
+Dobot i/o port
+P5.4
+P5.1
+(use code = 3 for port setup)
+NOTE: this is
+not the
+circuit
+diagram for
+the
+Sparkfun
+(9118) optoisolator (see
+appendix)
+53
+Dobot Magician Interface – Digital Inputs without Opto-isolator
+Notes:
+1) No opto-isolator is needed if Dobot accepts 5 volt inputs (must configure port with MUX code = 3)
+2) Do not use Dobot mode with pullup resistor if using direct connect
+3) This is valid only if Dobot digital input pins can handle 5 volts.
+port 5 (configured pull-up down resistor)
+use code "6" for port MUX setup in software
+ground
+Arduino
+Gnd
+Output pin
+Dobot i/o port
+P5.4
+P5.1
+direct connection
+not
+tested
+54
+Dobot Magician Interface – Digital Inputs (Reference)
+Ref: Dobot Magician V2 User Guide (2020)
+55
+Dobot Magician Interface – Digital Inputs (multiplexed)
+Ref: Dobot Magician API Description
+0
+1
+2
+3
+4
+5
+6
+use "6" if
+direct
+connect
+to
+Arduino
+use "5"
+which is
+pull-up
+resistor – If
+using optoisolator
+MUX codes to
+configure
+Dobot i/o
+ports
+Use this MUX
+code in the
+Python code to
+read the input
+port.
+Example: Reading External Input (from Arduino, etc.)
+import DobotDllType as dType
+api = dType.load()
+#Connect Dobot
+state = dType.ConnectDobot(api, "", 115200)[0]
+print("Dobot Connected...")
+EI05_port = 5 # Assuming EI05 corresponds to port 5
+dType.SetIOMultiplexing(api, EI05_port, 6) # set code to "5" for pull-up res. input (standard opto-isolator)
+ # set code to "6" for "direct" connect to Arduino
+ # "6" uses pull-down resistor
+while True:
+ input = dType.GetIODI(api, EI05_port)
+ print (input)
+ dType.dSleep(1000)
+dType.DisconnectDobot(api)
+56
+Appendix A: Sparkfun Opto-isolator BOB-09118
+57
+NOTES:
+1) The Sparkfun opto-isolator breakout board (9118) is not a "standard" opto-isolator
+2) This board adds extra transistors to the standard opto-isolator to reverse the logic of the output
+3) Use port MUX mode = 6 in software for this chip if needed. Do not use pull-up resistor mode.
+4) This board has 2 channels for 2 separate circuits – we only need one
+5) If using with Dobot, connect 1) HVG to P5.1 (GND), 2) HV to P5.2 (5v), 3) OUT1 to input P5.4 (input)
+6) from Arduino, connect output pin to IN1 (no resistor needed) and Arduino GND to GND on opto board
+not
+tested
+Additional References
+Forward and inverse kinematics (with classical and AI control); 2 dof robot arm (video)
+https://www.youtube.com/watch?v=5FD9jyy5eek
+58
