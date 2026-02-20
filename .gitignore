@@ -3,6 +3,11 @@
 # Gemini Responses
 responses/
 
+# Testing & runtime
+test/
+image.png
+code_by_gemini.py
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
