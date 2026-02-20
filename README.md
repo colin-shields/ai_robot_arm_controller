@@ -26,6 +26,7 @@ Run `main.py` and follow the directions in the CLI. If you have multiple webcams
 - `main.py` - Runs the program, including capturing an image, prompting Gemini, logging the results, and running the generated code.
 - `four_corners.py` - Moves robots to the centerline and four corners of the workspace.
 - `prompt.txt` - The base prompt that is sent to Gemini, informing it of the workspace area and general instructions. A simpler user prompt is taken in `main.py` and appended to the base prompt.
+- `code_by_gemini.py` - The code that Gemini generates to control the robot. Can be executed at the end of `main.py` or run separately.
 - `responses/` - Each time `main.py` is run, a log of the prompt used and Gemini's response is created, timestamped, and stored in this directory.
 - `suction_off.py` - Occasionally, the code Gemini generates leaves the vacuum pump on. Running this file will turn it back off.
 - `lecture ppt.txt` and `python demo.txt` - Demo files that are sent to Gemini to inform it of how to control the robot.
