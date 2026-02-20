@@ -1,4 +1,7 @@
-"""Full CLI to take an image and request Gemini to write code for controlling a Dobot robotic arm."""
+"""-------------------------------------------------------------
+-- Full CLI to take an image and request Gemini to write code
+--   for controlling a Dobot robotic arm.
+-------------------------------------------------------------"""
 
 from google import genai        # pip install google-genai
 from PIL import Image           # pip install Pillow
@@ -29,7 +32,7 @@ def get_image_option():
 def capture_from_webcam(image_path):
     image_captured = False
 
-    cap = cv.VideoCapture(2)    # Change this if you have multiple webcams
+    cap = cv.VideoCapture(0)    # Change this if you have multiple webcams
 
     if not cap.isOpened():
         print("Error opening camera.")
@@ -74,6 +77,10 @@ def request_gemini(image, prompt):
 
 def main():
     print("=== DOBOT-Gemini program CLI ===\n")
+
+    # Create necessary directories.
+    if not os.path.exists("responses"):
+        os.makedirs("responses")
 
     # Get image.
     image_path = DEFAULT_IMAGE_PATH
@@ -146,7 +153,7 @@ if __name__ == "__main__":
     with open("prompt.txt", 'r') as p:
         BASE_PROMPT = p.read()
 
-    with open("python demo 2.txt", 'r', errors='ignore') as d:
+    with open("python demo.txt", 'r', errors='ignore') as d:
         DEMO_CODE = d.read()
 
     with open("lecture ppt.txt", 'r', errors='ignore') as l:

@@ -1,15 +1,14 @@
-"""
-This file controls the Dobot. Most of it is based on the DobotControl.py demo file.
-"""
-from dobot_api import DobotDllType as dType     # I had to change the original name of the library because it had hyphens in it
+"""----------------------------------------------------------------------------------------
+This file moves the robot's head to the center line and four corners of the working area
+----------------------------------------------------------------------------------------"""
+from dobot_api import DobotDllType as dType
 from warnings import warn
-import math
-import numpy as np      # pip install numpy
+
 
 def main():
     api = dType.load()
 
-    state = dType.ConnectDobot(api,"", 115200)[0]
+    state = dType.ConnectDobot(api, "", 115200)[0]
     print("Connect status:", state)
 
     if not (state == dType.DobotConnect.DobotConnect_NoError):
@@ -24,20 +23,21 @@ def main():
     dType.SetPTPCommonParams(api, 100, 100, isQueued=1)
 
     # Asynch Home
-    #   NOTE: only home once after bot reset (for SOME reason??) actually wait maybe not?? idk ._.
-    # dType.SetHOMECmd(api, temp=0, isQueued=1)
+    #   NOTE: if the bot has just been reset, it will not run this (for some reason???)
+    dType.SetHOMECmd(api, temp=0, isQueued=1)
 
-    # Async PTP Motion
+    # Async PTP Motion Axes
     #   X-axis --> front to back (I'm calling the side with the cable ports the back)
     #   Y-axis --> side to side
     #   Z-axis --> up & down
 
+    # Move to the centerline & corners of the workspace.
     indexes = [dType.SetPTPCmd(api, dType.PTPMode.PTPMOVLXYZMode, 155, 0, -50, rHead=50, isQueued=1)[0],
-               dType.SetPTPCmd(api, dType.PTPMode.PTPMOVLXYZMode, 300, 0, -50, rHead=50)[0],
-               dType.SetPTPCmd(api, dType.PTPMode.PTPMOVLXYZMode, 155, -100, -50, rHead=50=1)[0],
-               dType.SetPTPCmd(api, dType.PTPMode.PTPMOVLXYZMode, 155, 100, -50, rHead=50=1)[0],
-               dType.SetPTPCmd(api, dType.PTPMode.PTPMOVLXYZMode, 300, -100, -50, rHead=50=1)[0],
-               dType.SetPTPCmd(api, dType.PTPMode.PTPMOVLXYZMode, 300, 100, -50, rHead=50=1)[0],
+               dType.SetPTPCmd(api, dType.PTPMode.PTPMOVLXYZMode, 300, 0, -50, rHead=50, isQueued=1)[0],
+               dType.SetPTPCmd(api, dType.PTPMode.PTPMOVLXYZMode, 155, -100, -50, rHead=50, isQueued=1)[0],
+               dType.SetPTPCmd(api, dType.PTPMode.PTPMOVLXYZMode, 155, 100, -50, rHead=50, isQueued=1)[0],
+               dType.SetPTPCmd(api, dType.PTPMode.PTPMOVLXYZMode, 300, -100, -50, rHead=50, isQueued=1)[0],
+               dType.SetPTPCmd(api, dType.PTPMode.PTPMOVLXYZMode, 300, 100, -50, rHead=50, isQueued=1)[0],
                ]
     last_index = indexes[-1]
 
