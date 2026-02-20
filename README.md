@@ -4,7 +4,11 @@ Clone repository:
 git clone https://github.com/colin-shields/ai_robot_arm_controller.git
 ```
 
-Initialize venv & install necessary libraries
+Initialize venv, then
+```commandline
+pip install -r requirements.txt
+```
+The API for connecting the the DOBOT robotic arm is included in the clone.
 
 Connect DOBOT and webcam to your PC.
 
