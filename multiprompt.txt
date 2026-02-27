@@ -1,0 +1,8 @@
+I've attached an image of blocks resting on a paper in a 2D plane. Describe the spatial relationship of all blocks in the image.
+/sep
+The top-left corner of the image is at (0, 0), and the bottom-right corner of the image is at (IMGX, IMGY). You are to return the coordinates of all four corners of the paper. For each block in the image, you are to return the color of the block as a string and the coordinate of its centroid. These coordinates will be used to move the objects with a robotic arm. Return your response in the following JSON format: {'paper': [corner1, corner2, corner3, corner4], 'blocks': [{'color': "color as a string", 'centroid': (x, y)}, {'color': "color as a string", 'centroid': (x, y)}]}.
+/sep
+Verify that the coordinates you just gave make sense. All x coordinates should be in the range [0, IMGX], and all y coordinates should be in the range [0, IMGY]. Additionally, check that the coordinates match with the spatial relationships you provided earlier.
+/sep
+I've attached two more files: a lecture on how to control a robot arm, and a demo python script showing how to use the library that controls the arm. In the robot's coordinates, the top-left corner of the paper is at (300, 100) and the bottom-right corner is at (155, 100). The functions for the vacuum pump do not need an `isQueued=1` argument. You are to generate Python code that will perform the task outlined below. Print out only the Python code formatted in a plain-text code block. Say nothing else:
+
